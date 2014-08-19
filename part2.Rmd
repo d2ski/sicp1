@@ -1,0 +1,67 @@
+The project for the statistical inference class
+========================================================
+The project consists of two parts:
+
+1. Simulation exercises.
+2. Basic inferential data analysis.
+
+# PART 2. Basic inferential data analysis.
+
+## Load the ToothGrowth data and perform some basic exploratory data analyses
+
+``` {r data}
+library(datasets)
+data = ToothGrowth
+str(data)
+
+library(ggplot2)
+
+qplot(dose, len, data=data, color = supp, size = I(3), alpha = I(.7), main = "Len by Dose") +
+    geom_smooth(method=lm, se = FALSE)
+
+qplot(dose, len, data = data, facets = .~supp, size = I(3), color = supp, main = "Len by Dose for each Supp")
+
+qplot(supp, len, data = data, color = dose, size = I(3), main = "Len by Supp")
+
+qplot(supp, len, data = data, color = dose, size = I(3), facets = .~dose, main = "Len by Supp for each Dose")
+```
+
+## Provide a basic summary of the data.
+Summarizing data by supp and dose.  
+``` {r datasummary}
+# By supp
+OJ <- data[data$supp == "OJ", "len"]
+oj.mean <- mean(OJ)
+oj.sd <- sd(OJ)
+VC <- data[data$supp == "VC", "len"]
+vc.mean <- mean(VC)
+vc.sd <- sd(VC)
+
+# By dose
+d05 <- data[data$dose == 0.5, "len"]
+d05.mean <- mean(d05)
+d05.sd <- sd(d05)
+d1 <- data[data$dose == 1, "len"]
+d1.mean <- mean(d1)
+d1.sd <- sd(d1)
+d2 <- data[data$dose == 2, "len"]
+d2.mean <- mean(d2)
+d2.sd <- sd(d2)
+
+g1 <- qplot(OJ, binwidth = 0.5)
+g2 <- qplot(VC, binwidth = 0.5)
+g3 <- qplot(d05, binwidth = 0.5)
+g4 <- qplot(d1, binwidth = 0.5)
+g5 <- qplot(d2, binwidth = 0.5)
+
+library(gridExtra)
+grid.arrange(g1, g2, g3, g4, g5, ncol = 2)
+```
+  
+VC: mean `r vc.mean`, sd `r vc.sd`.  
+OJ: mean `r oj.mean`, sd `r oj.sd`.  
+d05: mean `r d05.mean`, sd `r d05.sd`.  
+d1: mean `r d1.mean`, sd `r d1.sd`.  
+d2: mean `r d2.mean`, sd `r d2.sd`.  
+
+## Use confidence intervals and hypothesis tests to compare tooth growth by supp and dose.
