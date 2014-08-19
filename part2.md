@@ -99,3 +99,79 @@ d1: mean 19.735, sd 4.4154.
 d2: mean 26.1, sd 3.7742.  
 
 ## Use confidence intervals and hypothesis tests to compare tooth growth by supp and dose.
+
+Comparing VC and OJ using `t.test()`:  
+
+```r
+t.test(VC, OJ)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  VC and OJ
+## t = -1.915, df = 55.31, p-value = 0.06063
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -7.571  0.171
+## sample estimates:
+## mean of x mean of y 
+##     16.96     20.66
+```
+  
+Comparing different doses using `t.test`:
+
+```r
+t.test(d05, d1)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  d05 and d1
+## t = -6.477, df = 37.99, p-value = 1.268e-07
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -11.984  -6.276
+## sample estimates:
+## mean of x mean of y 
+##     10.61     19.73
+```
+
+```r
+t.test(d05, d2)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  d05 and d2
+## t = -11.8, df = 36.88, p-value = 4.398e-14
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -18.16 -12.83
+## sample estimates:
+## mean of x mean of y 
+##     10.61     26.10
+```
+
+```r
+t.test(d1, d2)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  d1 and d2
+## t = -4.901, df = 37.1, p-value = 1.906e-05
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -8.996 -3.734
+## sample estimates:
+## mean of x mean of y 
+##     19.73     26.10
+```

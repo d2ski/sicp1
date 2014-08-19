@@ -65,3 +65,15 @@ d1: mean `r d1.mean`, sd `r d1.sd`.
 d2: mean `r d2.mean`, sd `r d2.sd`.  
 
 ## Use confidence intervals and hypothesis tests to compare tooth growth by supp and dose.
+
+Comparing VC and OJ using `t.test()`:  
+``` {r supptest}
+t.test(VC, OJ)
+```
+  
+Comparing different doses using `t.test`:
+``` {r dosetest}
+t.test(d05, d1)
+t.test(d05, d2)
+t.test(d1, d2)
+```
