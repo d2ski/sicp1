@@ -77,3 +77,18 @@ t.test(d05, d1)
 t.test(d05, d2)
 t.test(d1, d2)
 ```
+
+Extractind VC dose 0.5, VC dose 1, VS dose 2 and OJ dose 0.5, OJ dose 1, OJ dose 2:
+``` {r tests}
+VCd05 <- data[data$supp == "VC" & data$dose == 0.5, "len"]
+VCd1 <- data[data$supp == "VC" & data$dose == 1, "len"]
+VCd2 <- data[data$supp == "VC" & data$dose == 2, "len"]
+
+OJd05 <- data[data$supp == "OJ" & data$dose == 0.5, "len"]
+OJd1 <- data[data$supp == "OJ" & data$dose == 1, "len"]
+OJd2 <- data[data$supp == "OJ" & data$dose == 2, "len"]
+
+t.test(VCd05, OJd05)
+t.test(VCd1, OJd1)
+t.test(VCd2, OJd2)
+```

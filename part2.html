@@ -342,6 +342,64 @@ d2: mean 26.1, sd 3.7742.  </p>
 ##     19.73     26.10
 </code></pre>
 
+<p>Extractind VC dose 0.5, VC dose 1, VS dose 2 and OJ dose 0.5, OJ dose 1, OJ dose 2:</p>
+
+<pre><code class="r">VCd05 &lt;- data[data$supp == &quot;VC&quot; &amp; data$dose == 0.5, &quot;len&quot;]
+VCd1 &lt;- data[data$supp == &quot;VC&quot; &amp; data$dose == 1, &quot;len&quot;]
+VCd2 &lt;- data[data$supp == &quot;VC&quot; &amp; data$dose == 2, &quot;len&quot;]
+
+OJd05 &lt;- data[data$supp == &quot;OJ&quot; &amp; data$dose == 0.5, &quot;len&quot;]
+OJd1 &lt;- data[data$supp == &quot;OJ&quot; &amp; data$dose == 1, &quot;len&quot;]
+OJd2 &lt;- data[data$supp == &quot;OJ&quot; &amp; data$dose == 2, &quot;len&quot;]
+
+t.test(VCd05, OJd05)
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  VCd05 and OJd05
+## t = -3.17, df = 14.97, p-value = 0.006359
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -8.781 -1.719
+## sample estimates:
+## mean of x mean of y 
+##      7.98     13.23
+</code></pre>
+
+<pre><code class="r">t.test(VCd1, OJd1)
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  VCd1 and OJd1
+## t = -4.033, df = 15.36, p-value = 0.001038
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -9.058 -2.802
+## sample estimates:
+## mean of x mean of y 
+##     16.77     22.70
+</code></pre>
+
+<pre><code class="r">t.test(VCd2, OJd2)
+</code></pre>
+
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  VCd2 and OJd2
+## t = 0.0461, df = 14.04, p-value = 0.9639
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -3.638  3.798
+## sample estimates:
+## mean of x mean of y 
+##     26.14     26.06
+</code></pre>
+
 </body>
 
 </html>

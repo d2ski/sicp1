@@ -175,3 +175,67 @@ t.test(d1, d2)
 ## mean of x mean of y 
 ##     19.73     26.10
 ```
+
+Extractind VC dose 0.5, VC dose 1, VS dose 2 and OJ dose 0.5, OJ dose 1, OJ dose 2:
+
+```r
+VCd05 <- data[data$supp == "VC" & data$dose == 0.5, "len"]
+VCd1 <- data[data$supp == "VC" & data$dose == 1, "len"]
+VCd2 <- data[data$supp == "VC" & data$dose == 2, "len"]
+
+OJd05 <- data[data$supp == "OJ" & data$dose == 0.5, "len"]
+OJd1 <- data[data$supp == "OJ" & data$dose == 1, "len"]
+OJd2 <- data[data$supp == "OJ" & data$dose == 2, "len"]
+
+t.test(VCd05, OJd05)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  VCd05 and OJd05
+## t = -3.17, df = 14.97, p-value = 0.006359
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -8.781 -1.719
+## sample estimates:
+## mean of x mean of y 
+##      7.98     13.23
+```
+
+```r
+t.test(VCd1, OJd1)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  VCd1 and OJd1
+## t = -4.033, df = 15.36, p-value = 0.001038
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -9.058 -2.802
+## sample estimates:
+## mean of x mean of y 
+##     16.77     22.70
+```
+
+```r
+t.test(VCd2, OJd2)
+```
+
+```
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  VCd2 and OJd2
+## t = 0.0461, df = 14.04, p-value = 0.9639
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -3.638  3.798
+## sample estimates:
+## mean of x mean of y 
+##     26.14     26.06
+```
