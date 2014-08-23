@@ -1,12 +1,13 @@
 ---
 output: pdf_document
 ---
-The project for the statistical inference class
+The project for the Statistical Inference class
 ========================================================
+*GitHub Repo (if source code required): https://github.com/d2ski/sicp1*
 
 ## PART 1. Simulation.
 
-The exponential distribution can be simulated in R with rexp(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also also 1/lambda. Set lambda = 0.2 for all of the simulations. In this simulation, you will investigate the distribution of averages of 40 exponential(0.2)s. Note that you will need to do a thousand or so simulated averages of 40 exponentials.
+The exponential distribution simulated in R with rexp(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also also 1/lambda. Lambda = 0.2 for all of the simulations. The distribution of averages of 40 exponential(0.2)s. A thousand simulated averages of 40 exponentials (n).
 
 ### Show where the distribution is centered at and compare it to the theoretical center of the distribution.
 
@@ -59,12 +60,15 @@ The variance of the sample distribution is `r vardistr`. The theoretical varianc
 
 ### Show that the distribution is approximately normal.
 
-``` {r normal, echo=FALSE}
+``` {r normal, echo=FALSE, fig.height=3,fig.width=3,warning=FALSE}
 g2 <- ggplot(data, aes(x=data$means)) + geom_histogram(aes(y=..density..), binwidth=.5,
                                                        color="black", fill="blue") +
     geom_vline(aes(xintercept=mean(data$means)), color="red", linetype="dashed", size=1) +
     geom_density(alpha=.2, fill="#FF6666", size=1.5)
 g2
+
+qqnorm(data$means, cex=0.3)
+qqline(data$means)
 ```
 
 ### Evaluate the coverage of the confidence interval for 1/lambda.
@@ -73,7 +77,7 @@ contains the point estimate (the theoretical mean = 1/lambda). The plot below sh
 when the point estimate is within 95% confidence level [`ll`, `ul`], where `ll` - lower limit,
 `ul' - upper limit of the interval.
 
-``` {r coverage, echo=FALSE}
+``` {r coverage, echo=FALSE,fig.height=4, fig.width=6}
 # Calculating confidence interval for each simulation
 ul <- c()
 ll <- c()

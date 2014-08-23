@@ -1,34 +1,33 @@
-The project for the statistical inference class
+---
+output: pdf_document
+---
+The project for the Statistical Inference class
 ========================================================
-The project consists of two parts:
+*GitHub Repo (if source code required): https://github.com/d2ski/sicp1*
 
-1. Simulation exercises.
-2. Basic inferential data analysis.
+## PART 2. Basic inferential data analysis.
+ToothGrowth dataset analysis.
 
-# PART 2. Basic inferential data analysis.
+### Q1. Load the ToothGrowth data and perform some basic exploratory data analyses.
 
-## Load the ToothGrowth data and perform some basic exploratory data analyses
+``` {r data, echo=FALSE, message=FALSE, fig.height=3.5,fig.width=3.5}
 
-``` {r data}
 library(datasets)
 data = ToothGrowth
-str(data)
-
 library(ggplot2)
 
-qplot(dose, len, data=data, color = supp, size = I(3), alpha = I(.7), main = "Len by Dose") +
-    geom_smooth(method=lm, se = FALSE)
-
 qplot(dose, len, data = data, facets = .~supp, size = I(3), color = supp, main = "Len by Dose for each Supp")
-
-qplot(supp, len, data = data, color = dose, size = I(3), main = "Len by Supp")
 
 qplot(supp, len, data = data, color = dose, size = I(3), facets = .~dose, main = "Len by Supp for each Dose")
 ```
 
-## Provide a basic summary of the data.
-Summarizing data by supp and dose.  
-``` {r datasummary}
+### Q2. Provide a basic summary of the data.
+``` {r datastr,echo=FALSE}
+str(data)
+```
+`len` - the length of tooth; `supp` - the delivery method with 2 values (VC or OJ); `dose` is the dose of Vitamin C (0.5, 1, 2).
+
+``` {r datasummary, echo=FALSE, fig.height=5, fig.width=5}
 # By supp
 OJ <- data[data$supp == "OJ", "len"]
 oj.mean <- mean(OJ)
@@ -48,38 +47,42 @@ d2 <- data[data$dose == 2, "len"]
 d2.mean <- mean(d2)
 d2.sd <- sd(d2)
 
-g1 <- qplot(OJ, binwidth = 0.5)
-g2 <- qplot(VC, binwidth = 0.5)
-g3 <- qplot(d05, binwidth = 0.5)
-g4 <- qplot(d1, binwidth = 0.5)
-g5 <- qplot(d2, binwidth = 0.5)
-
-library(gridExtra)
-grid.arrange(g1, g2, g3, g4, g5, ncol = 2)
 ```
   
-VC: mean `r vc.mean`, sd `r vc.sd`.  
-OJ: mean `r oj.mean`, sd `r oj.sd`.  
-d05: mean `r d05.mean`, sd `r d05.sd`.  
-d1: mean `r d1.mean`, sd `r d1.sd`.  
-d2: mean `r d2.mean`, sd `r d2.sd`.  
+`VC` - the length of tooth for delivery method VC: mean `r vc.mean`, sd `r vc.sd`.  
+`OJ` - the length of tooth for delivery method OJ: mean `r oj.mean`, sd `r oj.sd`.  
+`d05` - the length of tooth for both methods of dose 0.5: mean `r d05.mean`, sd `r d05.sd`.  
+`d1` - the length of tooth for both methods of dose 1: mean `r d1.mean`, sd `r d1.sd`.  
+`d2` - the length of tooth for both methods of dose 2: mean `r d2.mean`, sd `r d2.sd`.  
 
-## Use confidence intervals and hypothesis tests to compare tooth growth by supp and dose.
+### Q3. Use confidence intervals and hypothesis tests to compare tooth growth by supp and dose.
 
-Comparing VC and OJ using `t.test()`:  
-``` {r supptest}
-t.test(VC, OJ)
+`t.test()` VC vs OJ:  
+``` {r supptest, echo=FALSE, results='hide'}
+t1 <- t.test(VC, OJ)
 ```
+  Confidence level 95%: `r t1$conf.int`, p.value: `r t1$p.value`.  
   
-Comparing different doses using `t.test`:
-``` {r dosetest}
-t.test(d05, d1)
-t.test(d05, d2)
-t.test(d1, d2)
+`t.test()` d05 vs d1:
+``` {r dosetest1, echo=FALSE, results='hide'}
+t2 <- t.test(d05, d1)
 ```
+  Confidence level 95%: `r t2$conf.int`, p.value: `r t2$p.value`.  
+  
+`t.test()` d05 vs d2:
+``` {r dosetest2, echo=FALSE, results='hide'}
+t3 <- t.test(d05, d2)
+```
+  Confidence level 95%: `r t3$conf.int`, p.value: `r t3$p.value`.  
+  
+`t.test()` d1 vs d2:
+``` {r dosetest3, echo=FALSE, results='hide'}
+t4 <- t.test(d1, d2)
+```
+  Confidence level 95%: `r t4$conf.int`, p.value: `r t4$p.value`.  
 
-Extractind VC dose 0.5, VC dose 1, VS dose 2 and OJ dose 0.5, OJ dose 1, OJ dose 2:
-``` {r tests}
+**t-Tests for each dose of each delivery method: VC dose 0.5 (`VCd05`), VC dose 1 (`VCd1`), VC dose 2 (`VCd2`) vs OJ dose 0.5 (`OJd05`), OJ dose 1 (`OJd1`), OJ dose 2 (`OJd2`):**  
+``` {r tests, echo=FALSE}
 VCd05 <- data[data$supp == "VC" & data$dose == 0.5, "len"]
 VCd1 <- data[data$supp == "VC" & data$dose == 1, "len"]
 VCd2 <- data[data$supp == "VC" & data$dose == 2, "len"]
@@ -87,8 +90,32 @@ VCd2 <- data[data$supp == "VC" & data$dose == 2, "len"]
 OJd05 <- data[data$supp == "OJ" & data$dose == 0.5, "len"]
 OJd1 <- data[data$supp == "OJ" & data$dose == 1, "len"]
 OJd2 <- data[data$supp == "OJ" & data$dose == 2, "len"]
-
-t.test(VCd05, OJd05)
-t.test(VCd1, OJd1)
-t.test(VCd2, OJd2)
 ```
+
+`t.test()` VCd05 vs OJd05:
+``` {r tt1, echo=FALSE, results='hide'}
+tt1 <- t.test(VCd05, OJd05)
+```
+  Confidence level 95%: `r tt1$conf.int`, p.value: `r tt1$p.value`.  
+
+`t.test()` VCd1 vs OJd1:
+``` {r tt2, echo=FALSE, results='hide'}
+tt2 <- t.test(VCd1, OJd1)
+```
+  Confidence level 95%: `r tt2$conf.int`, p.value: `r tt2$p.value`.  
+
+`t.test()` VCd2 vs OJd2:
+``` {r tt3, echo=FALSE, results='hide'}
+tt3 <- t.test(VCd2, OJd2)
+```
+  Confidence level 95%: `r tt3$conf.int`, p.value: `r tt3$p.value`.  
+  
+### Q4. State your conclusions and the assumptions needed for your conclusions.
+It was assumed that:  
+- the guinea pigs were randomly selected;  
+- dose and delivery methods are independent;  
+- dose and delivery methods affects the tooth length and no other factors.  
+
+Conclusions are:  
+Different doses lead to significant difference in length of tooth for any delivery method. 
+Different delivery methods lead to significant difference in length of tooth if the dose is 0.5 or 1, but there is no evident difference is the dose is 2.
